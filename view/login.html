@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="loginform" onsubmit="login(event)">
+        <h2>Login</h2>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" placeholder="enter email" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <input type="submit" value="Login">
+    </form>
+    <button class="button" id="forgotpassword">Forgot password</button>
+    <p>New user? click here <a href="/">sign up</a></p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script>
+        async function login(e){
+            e.preventDefault();
+            const LoginDetails={
+                email:e.target.email.value,
+                password:e.target.password.value
+            };
+            try{
+                const response=await axios.post('/user/login',LoginDetails);
+                if(response.status===200){
+                    alert(response.data.message);
+                    alert("log in successfully");
+                   
+                }
+                else if(response.status===400){
+                    alert(response.data.message);
+                    alert("check password");
+                    //throw new Error(response.data.message);
+                }
+            }catch(err){
+                console.log(err.message);
+
+            }
+
+        }
+    </script>
+
+
+</body>
+
+</html>
